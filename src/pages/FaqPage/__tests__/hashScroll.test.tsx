@@ -93,4 +93,18 @@ describe("FAQ hash scrolling", () => {
     expect(el.props.offset).toBe(-100);
     expect(el.props.to).toBe("test");
   });
+
+  it("sets scrollRestoration to manual while scrolling", () => {
+    window.history.scrollRestoration = "auto" as any;
+    useLocationMock.mockReturnValue({ hash: "#test", key: "3" });
+    document.querySelector = vi.fn().mockReturnValue({
+      getBoundingClientRect: () => ({ height: 60 }),
+    }) as any;
+
+    const { unmount } = render(<FaqPage />);
+
+    expect(window.history.scrollRestoration).toBe("manual");
+    unmount();
+    expect(window.history.scrollRestoration).toBe("auto");
+  });
 });

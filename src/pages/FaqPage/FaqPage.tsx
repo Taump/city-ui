@@ -15,17 +15,24 @@ export default () => {
 
   useEffect(() => {
     const hash = location.hash.replace("#", "");
-    if (hash) {
-      const headerHeight = document.querySelector("header")?.getBoundingClientRect().height || 0;
-      window.scrollTo(0, 0);
-      scroller.scrollTo(hash, {
-        smooth: true,
-        offset: -headerHeight,
-        duration: 500,
-        spy: true,
-        hashSpy: true,
-      });
-    }
+    if (!hash) return;
+
+    const prevRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    const headerHeight =
+      document.querySelector("header")?.getBoundingClientRect().height || 0;
+    window.scrollTo(0, 0);
+    scroller.scrollTo(hash, {
+      smooth: true,
+      offset: -headerHeight,
+      duration: 500,
+      spy: true,
+      hashSpy: true,
+    });
+
+    return () => {
+      window.history.scrollRestoration = prevRestoration;
+    };
   }, [location.key, location.hash]);
 
   const { symbol } = useSettingsStore((state) => state);

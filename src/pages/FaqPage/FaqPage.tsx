@@ -16,9 +16,10 @@ export default () => {
   useEffect(() => {
     const hash = location.hash.replace("#", "");
     if (hash) {
+      const headerHeight = document.querySelector("header")?.getBoundingClientRect().height || 0;
       scroller.scrollTo(hash, {
         smooth: true,
-        offset: -80,
+        offset: -headerHeight,
         duration: 500,
         spy: true,
         hashSpy: true,

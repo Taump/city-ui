@@ -25,7 +25,7 @@ export default () => {
         hashSpy: true,
       });
     }
-  }, [location.hash]);
+  }, [location.key, location.hash]);
 
   const { symbol } = useSettingsStore((state) => state);
   const params = useAaParams();

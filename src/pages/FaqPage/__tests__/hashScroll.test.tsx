@@ -5,6 +5,7 @@ import { render } from "@testing-library/react";
 
 const useLocationMock = vi.fn();
 var scrollToMock: any;
+(window as any).scrollTo = vi.fn();
 
 vi.mock("react-router", () => ({
   Link: ({ children }: any) => <a>{children}</a>,
@@ -69,6 +70,7 @@ describe("FAQ hash scrolling", () => {
       "who-is-the-mayor",
       expect.objectContaining({ offset: -80 })
     );
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
   it("does not scroll when hash is empty", () => {

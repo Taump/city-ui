@@ -17,6 +17,7 @@ export default () => {
     const hash = location.hash.replace("#", "");
     if (hash) {
       const headerHeight = document.querySelector("header")?.getBoundingClientRect().height || 0;
+      window.scrollTo(0, 0);
       scroller.scrollTo(hash, {
         smooth: true,
         offset: -headerHeight,
